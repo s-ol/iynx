@@ -1,6 +1,5 @@
 import React from 'react';
-import SerialPort from 'serialport';
-import Readline from './lineparser';
+import { ipcRenderer } from 'electron';
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ-'.split('');
 
@@ -61,8 +60,6 @@ Wheel.propTypes = {
   offset: React.PropTypes.number,
 };
 
-const clamp = (val, min=0, max=1) => Math.max(min, Math.min(max, val));
-
 class Cryptex extends React.Component {
   constructor(props) {
     super(props);
@@ -75,23 +72,16 @@ class Cryptex extends React.Component {
       wires: false,
     };
 
-    const port = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
-    const parser = new Readline();
-    parser.on('data', line => {
-      const parts = line.split(' ');
-      const sliders = parts.slice(2, 10).map(
-        n => Math.floor(clamp(parseInt(n) / 880) * alphabet.length),
-      );
+    ipcRenderer.on('nano2', (event, { sliders, security, wires }) => {
       this.setState({
-        security: parts[0] === '1' ? true : false,
-        wires: parts[1] === '1' ? true : false,
-        sliders,
+        sliders: sliders.map(i => Math.floor(i * alphabet.length)),
+        security,
+        wires,
       });
 
       if (onChanged)
         onChanged(sliders.map(i => alphabet[i]).join('') === secret);
     });
-    port.pipe(parser);
   }
 
   render() {
