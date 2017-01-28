@@ -4,20 +4,25 @@
   "description": "",
   "scripts": {
     "start": "electron -r babel-register .",
-    "dev": "env DEBUG=1 electron -r babel-register ."
+    "dev": "env DEBUG=1 electron -r babel-register .",
+    "install": "electron-rebuild"
   },
   "bin": {
     "electron": "./node_modules/.bin/electron"
   },
   "main": "main.js",
   "babel": {
-    "presets": ["es2015", "react"]
+    "presets": [
+      "es2015",
+      "react"
+    ]
   },
   "dependencies": {
     "babel-register": "^6.22.0",
     "electron": "^1.4.15",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "serialport": "^4.0.7"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -25,6 +30,7 @@
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
+    "electron-rebuild": "^1.5.7",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
   }
