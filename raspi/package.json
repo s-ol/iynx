@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start": "electron -r babel-register .",
+    "start": "env NODE_ENV=production electron -r babel-register .",
     "dev": "env DEBUG=1 electron -r babel-register .",
     "install": "electron-rebuild"
   },

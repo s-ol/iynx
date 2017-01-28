@@ -1,0 +1,31 @@
+.cryptex {
+  position: relative;
+  display: inline-block;
+}
+
+.cryptex .wheel {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 150px;
+  margin: 10px;
+  border: 1px solid #000;
+  overflow: hidden;
+}
+
+.cryptex .letter {
+  height: 40px;
+  text-align: center;
+  font-size: 3em;
+  transition: transform 0.2s;
+}
+
+.cryptex .visor {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 40px;
+  margin-top: -23px;
+  border: 4px solid #888;
+}
