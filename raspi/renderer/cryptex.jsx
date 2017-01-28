@@ -9,7 +9,6 @@ const Letter  = ({ children, offset }) => (
     style={{
       height: 40,
       fontSize: '3em',
-//      transform: `perspective(400px) rotateX(${offset / alphabet.length * Math.PI * -2}rad)`,
       transition: 'transform 0.2s',
     }}
   >
@@ -68,7 +67,7 @@ class Cryptex extends React.Component {
   constructor(props) {
     super(props);
 
-    const { secret, onSolved } = this.props;
+    const { secret, onChanged } = this.props;
 
     this.state = {
       sliders: [null, null, null, null, null, null, null, null, null, null],
@@ -89,8 +88,8 @@ class Cryptex extends React.Component {
         sliders,
       });
 
-      if (onSolved && sliders.map(i => alphabet[i]).join('') === secret)
-        onSolved();
+      if (onChanged)
+        onChanged(sliders.map(i => alphabet[i]).join('') === secret);
     });
     port.pipe(parser);
   }
@@ -121,7 +120,7 @@ class Cryptex extends React.Component {
 
 Cryptex.propTypes = {
   secret: React.PropTypes.string,
-  onSolved: React.PropTypes.func,
+  onChanged: React.PropTypes.func,
 };
 
 export default Cryptex;

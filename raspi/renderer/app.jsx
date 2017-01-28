@@ -19,7 +19,7 @@ class App extends React.Component {
         <div>
           <Cryptex
             secret="HELP--ME"
-            onSolved={() => this.setState({ solved: true })}
+            onChanged={solved => this.setState({ solved })}
           />
         </div>
       </div>
