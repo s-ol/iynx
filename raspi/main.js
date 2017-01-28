@@ -38,8 +38,6 @@ parser.on('data', line => {
   const parts = line.split(' ');
   const sliders = parts.slice(2, 10).map(n => clamp(parseInt(n) / 1024));
 
-  console.log(sliders);
-
   if (win)
     win.webContents.send('nano2', {
       security: parts[0] === '1' ? true : false,

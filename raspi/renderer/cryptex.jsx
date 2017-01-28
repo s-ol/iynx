@@ -1,9 +1,10 @@
 import React from 'react';
 import { ipcRenderer } from 'electron';
+import memoize from 'memoization';
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ-'.split('');
 
-const Letter  = ({ children, offset }) => (
+const Letter  = memoize(({ children, offset }) => (
   <div
     style={{
       height: 40,
@@ -13,21 +14,17 @@ const Letter  = ({ children, offset }) => (
   >
     {children}
   </div>
-);
+));
 
-const Wheel = ({ offset }) => {
-  const charStyle = {
-    height: 40,
-    textAlign: 'center',
-  };
 
-  const fillers = 2;
-  const extendedAlphabet = [
-    ...alphabet.slice(alphabet.length - fillers - 1, alphabet.length - 1),
-    ...alphabet,
-    ...alphabet.slice(0, fillers),
-  ];
+const fillers = 2;
+const extendedAlphabet = [
+...alphabet.slice(alphabet.length - fillers - 1, alphabet.length - 1),
+...alphabet,
+...alphabet.slice(0, fillers),
+];
 
+const Wheel = memoize(({ offset }) => {
   const centered = offset + fillers;
 
   return (
@@ -54,7 +51,7 @@ const Wheel = ({ offset }) => {
       </div>
     </div>
   )
-};
+});
 
 Wheel.propTypes = {
   offset: React.PropTypes.number,
