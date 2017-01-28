@@ -11,6 +11,7 @@ app.on('ready', () => {
   win = new BrowserWindow({
     width: 800,
     height: 480,
+    useContentSize: true,
     title: 'IYNX',
     resizeable: false,
     kiosk: !debug
