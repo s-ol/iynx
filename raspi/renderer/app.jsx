@@ -35,16 +35,8 @@ export default class App extends React.Component {
       wires: false,
     };
 
-    /*
-    const st = fs.createReadStream('/dev/ttyUSB0', { encoding: 'ASCII' });
-    st.on('data', a => console.info(a));
-    this.stream = byline(st);
-    this.stream.on('data', line => {
-    */
     const port = new SerialPort('/dev/ttyUSB0', { baudRate: 115200 });
-    console.log(SerialPort.parsers);
     const parser = new Readline();
-    port.pipe(parser);
     parser.on('data', line => {
       const parts = line.split(' ');
       this.setState({
@@ -53,6 +45,7 @@ export default class App extends React.Component {
         sliders: parts.slice(2, 10).map(n => clamp(parseInt(n) / 880)),
       });
     });
+    port.pipe(parser);
   }
 
   render() {
