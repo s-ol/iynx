@@ -4,34 +4,35 @@ import Readline from './lineparser';
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ-'.split('');
 
+const color = 'fdb975'.split('').map(a => `#${a.repeat(6)}`);
 const Letter  = ({ children, offset }) => (
   <div
     style={{
-      height: 40,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      height: 48,
       fontSize: '3em',
-//      transform: `perspective(400px) rotateX(${offset / alphabet.length * Math.PI * -2}rad)`,
-      transition: 'transform 0.2s',
+      textAlign: 'center',
+      transform: `perspective(400px) translateZ(200px) rotateX(${offset / alphabet.length * Math.PI * 2}rad) translateZ(-200px) translateY(-50%)`,
+      opacity: Math.abs(offset) < 8 ? 1 : 0,
+      transition: 'transform 1.3s, opacity 1.3s, background 1.3s',
+      background: color[offset + 3],
     }}
+  offset={offset}
   >
     {children}
   </div>
 );
 
+const raddiff = (index, offset) => {
+  const diff = index - offset;
+  const opp = alphabet.length - Math.abs(diff);
+  return Math.abs(diff) < Math.abs(opp) ? diff : Math.sign(diff) * -opp;
+}
+
 const Wheel = ({ offset }) => {
-  const charStyle = {
-    height: 40,
-    textAlign: 'center',
-  };
-
-  const fillers = 2;
-  const extendedAlphabet = [
-    ...alphabet.slice(alphabet.length - fillers - 1, alphabet.length - 1),
-    ...alphabet,
-    ...alphabet.slice(0, fillers),
-  ];
-
-  const centered = offset + fillers;
-
   return (
     <div style={{
       position: 'relative',
@@ -44,14 +45,14 @@ const Wheel = ({ offset }) => {
     }}>
       <div style={{
         position: 'absolute',
-        display: 'flex',
-        flexFlow: 'column nowrap',
+        top: 75, // - 40/2,
         width: '100%',
-        top: centered * -40 + 52,
-        transition: 'top 0.3s',
+        height: 40,
+//        transform: `perspective(400px) rotateX(${offset / alphabet.length * Math.PI * -2}rad)`,
+        transition: 'transform 0.3s',
       }}>
-        {extendedAlphabet.map(
-          (character, index) => <Letter key={index} offset={index - centered}>{character}</Letter>
+        {alphabet.map(
+          (character, index) => <Letter key={index} offset={raddiff(index, offset)}>{character}</Letter>
         )}
       </div>
     </div>
