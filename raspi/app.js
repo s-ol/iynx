@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Cryptex from './cryptex';
+import { decode, TemporaryStream, Queue } from './audio';
+import Speaker from 'speaker';
+
+const audio = Queue.to(new Speaker());
 
 class App extends React.Component {
   constructor() {
@@ -8,6 +12,11 @@ class App extends React.Component {
     this.state = {
       solved: false,
     };
+  }
+
+  componentWillUpdate(props, { solved }) {
+    if (solved && !this.state.solved)
+      decode('piano2.wav').then(stream => audio.append(stream.pipe(new TemporaryStream(200))));
   }
 
   render() {
