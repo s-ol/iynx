@@ -15,7 +15,7 @@ app
     height: 480,
     title: 'IYNX',
     resizeable: false,
-    kiosk: !debug
+    show: false,
   });
 
   win.setMenu(null);
@@ -28,7 +28,11 @@ app
 
   if (debug) win.webContents.openDevTools();
 
-  win.on('closed', () => { win = null });
+  win.once('ready-to-show', () => {
+    win.setKiosk(!debug);
+    win.show()
+  });
+  win.once('closed', () => { win = null });
 })
 .on('window-all-closed', () => app.quit());
 
