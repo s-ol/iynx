@@ -1,28 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Cryptex from './cryptex';
-import { Files, personalFiles, workFiles, galleryFiles } from './files';
+import MenuButton from './menu';
+import { Files, Preview, personalFiles, workFiles, galleryFiles } from './files';
 // import { decode, TemporaryStream, Queue } from './audio';
 // import Speaker from 'speaker';
 
 // const audio = Queue.to(new Speaker());
 
-const MenuButton = ({ title, icon, top, left, onClick }) => (
-  <div className="menu-btn" style={{ top, left }}>
-    <img src={`files/icons/${title}.png`} />
-    <div onClick={onClick} />
-    <div onClick={onClick} className="l" />
-    <div onClick={onClick} className="r" />
-  </div>
-);
+const folders = {
+  personal: personalFiles,
+  work: workFiles,
+  gallery: galleryFiles,
+};
 
 class App extends React.Component {
   constructor () {
     super();
+
     this.state = {
       solved: false,
-      screen: 'menu',
+      screen: null,
+      fileIndex: null,
     };
+
+    this.reset = () => this.setState({ screen: null });
   }
 
   componentWillUpdate(props, { solved }) {
@@ -30,65 +33,86 @@ class App extends React.Component {
     //  decode('piano2.wav').then(stream => audio.append(stream.pipe(new TemporaryStream(200))));
   }
 
-  render() {
-    const { screen } = this.state;
+  getContent() {
+    const { screen, fileIndex } = this.state;
 
-    let content = null;
+    if (fileIndex !== null && screen)
+      return (
+        <Preview
+          {...folders[screen][fileIndex]}
+          folder={screen}
+          onReturn={() => this.setState({ fileIndex: null })}
+        />
+      );
+
     switch (screen) {
-      case 'menu':
-        return (
-          <div>
-            <h1 className="title">IYNX</h1>
-            <MenuButton
-              title="iynx"
-              left={66}
-              top={335}
-            />
-            <MenuButton
-              onClick={() => this.setState({ screen: 'system' })}
-              title="system"
-              left={144}
-              top={290}
-            />
-            <MenuButton
-              onClick={() => this.setState({ screen: 'gallery' })}
-              title="gallery"
-              left={222}
-              top={245}
-            />
-            <MenuButton
-              onClick={() => this.setState({ screen: 'personal' })}
-              title="personal"
-              left={300}
-              top={200}
-            />
-            <MenuButton
-              onClick={() => this.setState({ screen: 'work' })}
-              title="work"
-              left={300}
-              top={290}
-            />
-          </div>
-        );
       case 'system':
         return (
           <Cryptex
+            key="system"
             secret="HELP--ME"
             onChanged={solved => this.setState({ solved })}
           />
         );
       case 'personal':
-        return <Files title="personal" files={personalFiles} />;
       case 'work':
-        return <Files title="work" files={workFiles} />;
       case 'gallery':
-        return <Files title="gallery" files={galleryFiles} />;
+        return <Files
+          key={screen}
+          title={screen}
+          files={folders[screen]}
+          onSelect={fileIndex => this.setState({ fileIndex })}
+          onReturn={() => this.setState({ screen: null, fileIndex: null })}
+        />;
     }
 
     return (
-      <div>
-        {content}
+      <div key="menu" className="menu">
+        <h1 className="title">IYNX</h1>
+        <MenuButton
+          title="iynx"
+          left={56}
+          top={319}
+        />
+        <MenuButton
+          onClick={() => this.setState({ screen: 'system' })}
+          title="system"
+          left={134}
+          top={274}
+        />
+        <MenuButton
+          onClick={() => this.setState({ screen: 'gallery' })}
+          title="gallery"
+          left={212}
+          top={229}
+        />
+        <MenuButton
+          onClick={() => this.setState({ screen: 'personal' })}
+          title="personal"
+          left={290}
+          top={184}
+        />
+        <MenuButton
+          onClick={() => this.setState({ screen: 'work' })}
+          title="work"
+          left={290}
+          top={274}
+        />
       </div>
+    );
+  }
+
+  render() {
+    const { screen } = this.state;
+
+    return (
+      <ReactCSSTransitionGroup
+        transitionName="anim"
+        transitionEnterTimeout={500}
+        transitionLeaveTimeout={300}
+      >
+        {this.getContent()}
+      </ReactCSSTransitionGroup>
     );
   }
 }

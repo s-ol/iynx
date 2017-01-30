@@ -1,4 +1,4 @@
-.files {
+.files > div {
   margin-top: 36px;
   width: 475px;
   height: 280px;
@@ -39,4 +39,52 @@
   cursor: pointer;
   width: 200px;
   height: 42px;
+}
+
+.files.anim-enter, .files.anim-leave-active {
+  margin-left: -100vw;
+}
+.files-anim-leave, .files.anim-enter-active {
+  margin-left: 0;
+}
+.files.anim-enter-active, .files.anim-leave-active {
+  transition: margin-left 0.3s;
+}
+
+.overlay.anim-enter, .overlay.anim-leave-active {
+  opacity: 0;
+  visibility: hidden;
+}
+.overlay-anim-leave, .overlay.anim-enter-active {
+  opacity: 1;
+  visibility: visible;;
+}
+.overlay.anim-enter-active, .overlay.anim-leave-active {
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.files .menu-btn {
+  transform: scale(0.6);
+}
+
+.files.anim-enter .menu-btn {
+  opacity: 0;
+  visibility: hidden;
+  margin-left: 80px;
+}
+.files.anim-enter-active .menu-btn {
+  opacity: 1;
+  visibility: visible;
+  margin-left: 0;
+  transition: opacity 0.3s 0.3s, visibility 0.3s 0.3s, margin-left 0.3s 0.3s;
+}
+
+.files-anim-leave .menu-btn {
+  opacity: 1;
+  visibility: visible;
+}
+.files.anim-leave-active .menu-btn {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
 }

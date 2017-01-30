@@ -2,7 +2,9 @@
   position: absolute;
 }
 
-.menu-btn > div {
+.menu-btn > div,
+.menu-btn > div::before,
+.menu-btn > div::after {
   position: absolute;
   cursor: pointer;
   width: 50px;
@@ -12,15 +14,29 @@
   transform: translateY(-50%);
 }
 
-.menu-btn > .l {
-  transform: translateY(-50%) rotate(60deg);
+.menu-btn > div::before, .menu-btn > div::after {
+  display: block;
+  content: '';
+  transform: rotate(60deg);
 }
 
-.menu-btn > .r {
-  transform: translateY(-50%) rotate(-60deg);
+.menu-btn > div::after {
+  transform: rotate(-60deg);
 }
 
 .menu-btn > img {
   position: absolute;
   transform: translate(-24px, -43px);
+}
+
+.menu.anim-enter, .menu.anim-leave-active {
+  opacity: 0;
+  visibility: hidden;
+}
+.menu-anim-leave, .menu.anim-enter-active {
+  opacity: 1;
+  visibility: visible;;
+}
+.menu.anim-enter-active, .menu.anim-leave-active {
+  transition: opacity 0.3s, visibility 0.3s;
 }

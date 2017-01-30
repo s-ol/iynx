@@ -20,6 +20,12 @@ table {
   padding: 16px 10px;
 }
 
+#view > span > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 body {
   position: relative;
   width: 100vw;
@@ -80,4 +86,3 @@ body {
 .anim.left {
   margin-left: -100vw;
 }
-
