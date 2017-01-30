@@ -1,6 +1,7 @@
 import React from 'react';
 import { ipcRenderer } from 'electron';
 import memoize from 'memoization';
+import MenuButton from '../menu';
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ-'.split('');
 
@@ -57,12 +58,19 @@ class Cryptex extends React.Component {
   }
 
   render() {
+    const { onReturn } = this.props;
     const { sliders } = this.state;
 
     return (
-      <div className="cryptex">
+      <div className="cryptex box border">
         {sliders.map((value, index) => <Wheel key={index} offset={value} />)}
-        <div className="visor" />
+        <div className="visor box border-trbl" />
+        <MenuButton
+          onClick={onReturn}
+          title="iynx"
+          left={656}
+          top={319}
+        />
       </div>
     );
   }
@@ -71,6 +79,7 @@ class Cryptex extends React.Component {
 Cryptex.propTypes = {
   secret: React.PropTypes.string,
   onChanged: React.PropTypes.func,
+  onReturn: React.PropTypes.func,
 };
 
 export default Cryptex;

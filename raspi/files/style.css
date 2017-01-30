@@ -2,10 +2,6 @@
   margin-top: 36px;
   width: 475px;
   height: 280px;
-
-  border: 1px solid #fff;
-  border-width: 7px 10px;
-  border-image: url(../images/borders-all.png) 25% repeat;
 }
 
 .files table {

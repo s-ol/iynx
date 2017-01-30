@@ -52,6 +52,7 @@ class App extends React.Component {
             key="system"
             secret="HELP--ME"
             onChanged={solved => this.setState({ solved })}
+            onReturn={() => this.setState({ screen: null, fileIndex: null })}
           />
         );
       case 'personal':

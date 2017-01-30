@@ -24,7 +24,7 @@ export const Preview = ({ title, date, content, folder, onReturn }) => (
 export const Files = ({ title, files, onSelect, onReturn }) => (
   <div className="files">
     <h1 className="title">{title}</h1>
-    <div>
+    <div className="border">
       <table>
         <tbody>
           <tr>

@@ -23,9 +23,44 @@
 .cryptex .visor {
   position: absolute;
   top: 50%;
-  left: 0;
-  right: 0;
-  height: 40px;
-  margin-top: -23px;
-  border: 4px solid #888;
+  left: 11px;
+  right: 11px;
+  height: 43px;
+  margin-top: -20px;
+}
+
+.cryptex.anim-enter, .cryptex.anim-leave-active {
+  margin-left: -100vw;
+}
+.cryptex-anim-leave, .cryptex.anim-enter-active {
+  margin-left: 0;
+}
+.cryptex.anim-enter-active, .cryptex.anim-leave-active {
+  transition: margin-left 0.3s;
+}
+
+.cryptex .menu-btn {
+  transform: scale(0.6);
+}
+
+.cryptex.anim-enter .menu-btn {
+  opacity: 0;
+  visibility: hidden;
+  margin-left: 80px;
+}
+.cryptex.anim-enter-active .menu-btn {
+  opacity: 1;
+  visibility: visible;
+  margin-left: 0;
+  transition: opacity 0.3s 0.3s, visibility 0.3s 0.3s, margin-left 0.3s 0.3s;
+}
+
+.cryptex-anim-leave .menu-btn {
+  opacity: 1;
+  visibility: visible;
+}
+.cryptex.anim-leave-active .menu-btn {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
 }

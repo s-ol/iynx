@@ -54,7 +54,14 @@ body {
 }
 
 /* BORDERS */
-.border-trbl::before, .border-trbl::after {
+.border, .border-trbl {
+  position: relative;
+}
+
+.border::before,
+.border::after,
+.border-trbl::before,
+.border-trbl::after {
   display: block;
   position: absolute;
   top: 0;
@@ -64,13 +71,17 @@ body {
   content: '';
   border: solid #fff;
   border-width: 10px 7px 0;
-  border-image: url(images/borders-trbl.png) 25% repeat;
+  border-image: url(images/borders-all.png) 25% repeat;
 }
 
-.border-trbl::after {
+.border::after, .border-trbl::after {
   bottom: 0;
   top: initial;
   border-width: 0 7px 10px;
+}
+
+.border-trbl::before, .border-trbl::after {
+  border-image: url(images/borders-trbl.png) 25% repeat;
 }
 
 /* IN/OUT ANIMATIONS */
