@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import Cryptex from './cryptex';
+import { ipcRenderer } from 'electron';
 import MenuButton from './menu';
+import Login from './login';
+import Cryptex from './cryptex';
 import { Files, Preview, personalFiles, workFiles, galleryFiles } from './files';
 // import { decode, TemporaryStream, Queue } from './audio';
 // import Speaker from 'speaker';
@@ -23,9 +25,17 @@ class App extends React.Component {
       solved: false,
       screen: null,
       fileIndex: null,
+      sd: null,
     };
 
     this.reset = () => this.setState({ screen: null });
+
+    ipcRenderer.on('sd', (event, connected) => {
+      const { sd } = this.state;
+
+      if (!connected) this.setState({ sd: null });
+      else if (!sd) this.setState({ sd: 'connected' });
+    });
   }
 
   componentWillUpdate(props, { solved }) {
@@ -34,7 +44,19 @@ class App extends React.Component {
   }
 
   getContent() {
-    const { screen, fileIndex } = this.state;
+    const { sd, screen, fileIndex } = this.state;
+
+    if (!sd) {
+      return (<h1>Enter Personality Chip</h1>);
+    } else if (sd !== 'confirmed') {
+      return (
+        <Login
+          key="login"
+          secret="abcd"
+          onReturn={() => this.setState({ sd: 'confirmed' })}
+        />
+      );
+    }
 
     if (fileIndex !== null && screen)
       return (
@@ -68,7 +90,7 @@ class App extends React.Component {
     }
 
     return (
-      <div key="menu" className="menu">
+      <div key="menu" className="menu view">
         <h1 className="title">IYNX</h1>
         <MenuButton
           title="iynx"
@@ -104,8 +126,6 @@ class App extends React.Component {
   }
 
   render() {
-    const { screen } = this.state;
-
     return (
       <ReactCSSTransitionGroup
         transitionName="anim"

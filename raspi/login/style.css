@@ -1,0 +1,56 @@
+.input {
+  margin: 120px 120px 80px;
+  padding: 12px 24px 8px;
+  height: 56px;
+  font-size: 48px;
+}
+
+.keyboard {
+  margin: -2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.keyboard > div {
+  display: flex;
+  justify-content: space-around;
+}
+
+.keyboard > div > div {
+  flex-grow: 1;
+  margin: 2px;
+  text-align: center;
+  font-size: 32px;
+  height: 40px;
+}
+
+.login.anim-leave {
+  opacity: 1;
+  visibility: visible;
+}
+.login.anim-leave-active {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.login.anim-enter {
+  opacity: 0;
+  visibility: hidden;
+}
+.login.anim-enter-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.login.anim-leave .keyboard,
+.login.anim-enter-active .keyboard {
+  transform: perspective(800px) rotateX(0);
+  opacity: 1;
+}
+.login.anim-enter .keyboard,
+.login.anim-leave-active .keyboard,
+.keyboard.solved {
+  transform: perspective(800px) rotateX(90deg);
+  opacity: 0;
+}

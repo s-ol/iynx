@@ -29,13 +29,21 @@
   transform: translate(-24px, -43px);
 }
 
-.menu.anim-enter, .menu.anim-leave-active {
+.menu.anim-enter {
   opacity: 0;
   visibility: hidden;
 }
-.menu-anim-leave, .menu.anim-enter-active {
+.menu.anim-enter-active {
   opacity: 1;
   visibility: visible;;
+}
+.menu.anim-leave {
+  opacity: 1;
+  visibility: visible;;
+}
+.menu.anim-leave-active {
+  opacity: 0;
+  visibility: hidden;
 }
 .menu.anim-enter-active, .menu.anim-leave-active {
   transition: opacity 0.3s, visibility 0.3s;

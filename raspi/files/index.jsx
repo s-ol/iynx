@@ -9,7 +9,7 @@ export * from './personalFiles';
 export * from './galleryFiles';
 
 export const Preview = ({ title, date, content, folder, onReturn }) => (
-  <div key="overlay" className="box overlay border-trbl">
+  <div key="overlay" className="overlay view box border-trbl">
     <h2>{title} | {folder} | {date}</h2>
     {content}
     <div
@@ -22,7 +22,7 @@ export const Preview = ({ title, date, content, folder, onReturn }) => (
 );
 
 export const Files = ({ title, files, onSelect, onReturn }) => (
-  <div className="files">
+  <div className="files view">
     <h1 className="title">{title}</h1>
     <div className="border">
       <table>
@@ -41,13 +41,13 @@ export const Files = ({ title, files, onSelect, onReturn }) => (
           ))}
         </tbody>
       </table>
-      <MenuButton
-        onClick={onReturn}
-        title="iynx"
-        left={656}
-        top={319}
-      />
     </div>
+    <MenuButton
+      onClick={onReturn}
+      title="iynx"
+      left={656}
+      top={319}
+    />
   </div>
 );
 

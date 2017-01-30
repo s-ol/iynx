@@ -62,9 +62,11 @@ class Cryptex extends React.Component {
     const { sliders } = this.state;
 
     return (
-      <div className="cryptex box border">
-        {sliders.map((value, index) => <Wheel key={index} offset={value} />)}
-        <div className="visor box border-trbl" />
+      <div className="cryptex view">
+        <div className="box border">
+          {sliders.map((value, index) => <Wheel key={index} offset={value} />)}
+          <div className="visor box border-trbl" />
+        </div>
         <MenuButton
           onClick={onReturn}
           title="iynx"

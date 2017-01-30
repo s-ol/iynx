@@ -3,6 +3,7 @@ import SerialPort from 'serialport';
 import Readline from './lineparser';
 import path from 'path';
 import url from 'url';
+import fs from 'fs';
 
 const debug = !!process.env.DEBUG;
 let win;
@@ -46,4 +47,9 @@ new SerialPort('/dev/ttyUSB0', { baudRate: 115200 })
       sliders: parts.slice(2, 10).map(n => clamp(parseInt(n) / 1024)),
     });
   })
+);
+
+setInterval(
+  () => win && win.webContents.send('sd', fs.existsSync('/dev/sdc1')),
+  500
 );
