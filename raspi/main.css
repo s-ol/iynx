@@ -16,6 +16,8 @@ table {
   bottom: 36px;
   left: 42px;
   right: 42px;
+
+  padding: 16px 10px;
 }
 
 body {

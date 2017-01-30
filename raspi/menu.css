@@ -1,0 +1,26 @@
+.menu-btn {
+  position: absolute;
+}
+
+.menu-btn > div {
+  position: absolute;
+  cursor: pointer;
+  width: 50px;
+  height: 86px;
+  border: solid white;
+  border-width: 1px 0;
+  transform: translateY(-50%);
+}
+
+.menu-btn > .l {
+  transform: translateY(-50%) rotate(60deg);
+}
+
+.menu-btn > .r {
+  transform: translateY(-50%) rotate(-60deg);
+}
+
+.menu-btn > img {
+  position: absolute;
+  transform: translate(-24px, -43px);
+}

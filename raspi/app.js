@@ -7,6 +7,15 @@ import { Files, personalFiles, workFiles, galleryFiles } from './files';
 
 // const audio = Queue.to(new Speaker());
 
+const MenuButton = ({ title, icon, top, left, onClick }) => (
+  <div className="menu-btn" style={{ top, left }}>
+    <img src={`files/icons/${title}.png`} />
+    <div onClick={onClick} />
+    <div onClick={onClick} className="l" />
+    <div onClick={onClick} className="r" />
+  </div>
+);
+
 class App extends React.Component {
   constructor () {
     super();
@@ -29,10 +38,36 @@ class App extends React.Component {
       case 'menu':
         return (
           <div>
-            <div onClick={() => this.setState({ screen: 'system' })}>system</div>
-            <div onClick={() => this.setState({ screen: 'personal' })}>personal</div>
-            <div onClick={() => this.setState({ screen: 'work' })}>work</div>
-            <div onClick={() => this.setState({ screen: 'gallery' })}>gallery</div>
+            <h1 className="title">IYNX</h1>
+            <MenuButton
+              title="iynx"
+              left={66}
+              top={335}
+            />
+            <MenuButton
+              onClick={() => this.setState({ screen: 'system' })}
+              title="system"
+              left={144}
+              top={290}
+            />
+            <MenuButton
+              onClick={() => this.setState({ screen: 'gallery' })}
+              title="gallery"
+              left={222}
+              top={245}
+            />
+            <MenuButton
+              onClick={() => this.setState({ screen: 'personal' })}
+              title="personal"
+              left={300}
+              top={200}
+            />
+            <MenuButton
+              onClick={() => this.setState({ screen: 'work' })}
+              title="work"
+              left={300}
+              top={290}
+            />
           </div>
         );
       case 'system':
