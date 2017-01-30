@@ -9,14 +9,16 @@ export * from './personalFiles';
 export * from './galleryFiles';
 
 export const Preview = ({ title, date, content, folder, onReturn }) => (
-  <div key="overlay" className="overlay view box border-trbl">
-    <h2>{title} | {folder} | {date}</h2>
-    {content}
-    <div
-      className="box back-btn"
-      onClick={onReturn}
-    >
-      BACK
+  <div key="overlay" className="overlay view">
+    <div className="box border-trbl">
+      <h2>{title} | {folder} | {date}</h2>
+      {content}
+      <div
+        className="box back-btn"
+        onClick={onReturn}
+      >
+        BACK
+      </div>
     </div>
   </div>
 );

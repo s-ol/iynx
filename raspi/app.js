@@ -138,5 +138,7 @@ class App extends React.Component {
   }
 }
 
-window.onload = () =>
+window.onload = () => {
+  if (!process.env.DEBUG) document.body.style.cursor = 'none';
   ReactDOM.render(<App />, document.getElementById('view'));
+}

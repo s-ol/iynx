@@ -12,7 +12,7 @@
   background: rgba(0, 255, 255, 0.13);
 }
 
-.overlay {
+.overlay > .box {
   position: absolute;
 
   top: 0;
