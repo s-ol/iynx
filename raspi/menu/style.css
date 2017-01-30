@@ -6,7 +6,6 @@
 .menu-btn > div::before,
 .menu-btn > div::after {
   position: absolute;
-  cursor: pointer;
   width: 50px;
   height: 86px;
   border: solid white;

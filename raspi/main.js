@@ -4,6 +4,7 @@ import Readline from './lineparser';
 import path from 'path';
 import url from 'url';
 import fs from 'fs';
+import config from './config';
 
 const debug = !!process.env.DEBUG;
 let win;
@@ -38,7 +39,7 @@ app
 
 const clamp = (val, min=0, max=1) => Math.max(min, Math.min(max, val));
 
-new SerialPort('/dev/ttyUSB0', { baudRate: 115200 })
+new SerialPort(config.nano2, { baudRate: 115200 })
 .pipe(
   new Readline()
   .on('data', line => {
@@ -54,6 +55,6 @@ new SerialPort('/dev/ttyUSB0', { baudRate: 115200 })
 );
 
 setInterval(
-  () => win && win.webContents.send('sd', fs.existsSync('/dev/sdc1')),
+  () => win && win.webContents.send('sd', fs.existsSync(config.sd)),
   500
 );
