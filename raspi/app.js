@@ -1,19 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Cryptex from './cryptex';
+import { Files, personalFiles, workFiles, galleryFiles } from './files';
 // import { decode, TemporaryStream, Queue } from './audio';
 // import Speaker from 'speaker';
 
 // const audio = Queue.to(new Speaker());
-
-const Files = () => (<div>Files</div>);
 
 class App extends React.Component {
   constructor () {
     super();
     this.state = {
       solved: false,
-      screen: 'personal',
+      screen: 'menu',
     };
   }
 
@@ -27,23 +26,28 @@ class App extends React.Component {
 
     let content = null;
     switch (screen) {
+      case 'menu':
+        return (
+          <div>
+            <div onClick={() => this.setState({ screen: 'system' })}>system</div>
+            <div onClick={() => this.setState({ screen: 'personal' })}>personal</div>
+            <div onClick={() => this.setState({ screen: 'work' })}>work</div>
+            <div onClick={() => this.setState({ screen: 'gallery' })}>gallery</div>
+          </div>
+        );
       case 'system':
-        content = (
+        return (
           <Cryptex
             secret="HELP--ME"
             onChanged={solved => this.setState({ solved })}
           />
         );
-        break;
       case 'personal':
-        return (
-          <Files />
-        );
-        break;
+        return <Files title="personal" files={personalFiles} />;
       case 'work':
-        break;
+        return <Files title="work" files={workFiles} />;
       case 'gallery':
-        break;
+        return <Files title="gallery" files={galleryFiles} />;
     }
 
     return (

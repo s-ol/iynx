@@ -1,0 +1,81 @@
+/* RESETS */
+h1, h2, h3 {
+  margin: 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* LAYOUT */
+#view {
+  position: absolute;
+
+  top: 36px;
+  bottom: 36px;
+  left: 42px;
+  right: 42px;
+}
+
+body {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+
+  margin: 0;
+  padding: 0;
+
+  color: #ffffff;
+  font-family: sans-serif, sans;
+  background: url(images/background.png);
+
+  overflow: hidden;
+}
+
+/* ELEMENTS */
+.box {
+  background: rgba(0, 255, 255, 0.13);
+}
+
+.title {
+  font-family: 'Nasalization';
+  font-size: 36px;
+  font-weight: 200;
+  text-transform: uppercase;
+}
+
+/* BORDERS */
+.border-trbl::before, .border-trbl::after {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 -7px;
+  content: '';
+  border: solid #fff;
+  border-width: 10px 7px 0;
+  border-image: url(images/borders-trbl.png) 25% repeat;
+}
+
+.border-trbl::after {
+  bottom: 0;
+  top: initial;
+  border-width: 0 7px 10px;
+}
+
+/* IN/OUT ANIMATIONS */
+.anim {
+  transition: margin-left 0.3s, opacity 0.3s, visibility 0.3s;
+}
+
+.anim.hidden, .anim.left {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.anim.left {
+  margin-left: -100vw;
+}
+
