@@ -39,6 +39,20 @@ app
 
 const clamp = (val, min=0, max=1) => Math.max(min, Math.min(max, val));
 
+new SerialPort(config.nano1, { baudRate: 115200 })
+.pipe(
+  new Readline()
+  .on('data', line => {
+    if (!win) return;
+
+    const parts = line.split(' ');
+    win.webContents.send('nano1', {
+      calibration: parts[0] === '1' ? true : false,
+      number: parts[1] === '1' ? true : false,
+    });
+  })
+);
+
 new SerialPort(config.nano2, { baudRate: 115200 })
 .pipe(
   new Readline()
@@ -50,6 +64,7 @@ new SerialPort(config.nano2, { baudRate: 115200 })
       security: parts[0] === '1' ? true : false,
       wires: parts[1] === '1' ? true : false,
       sliders: parts.slice(2, 10).map(n => clamp(parseInt(n) / 1024)),
+      leds: parts.slice(10, 18).map(n => clamp(parseInt(n) / 1024)),
     });
   })
 );

@@ -36,14 +36,20 @@
   height: 42px;
 }
 
-.files.anim-enter, .files.anim-leave-active {
+.files.anim-enter {
   margin-left: -100vw;
+  opacity: 0;
 }
 .files-anim-leave, .files.anim-enter-active {
   margin-left: 0;
+  opacity: 1;
+}
+.files.anim-leave-active {
+  margin-left: 100vw;
+  opacity: 0;
 }
 .files.anim-enter-active, .files.anim-leave-active {
-  transition: margin-left 0.3s;
+  transition: margin-left 0.3s, opacity 0.3s;
 }
 
 .overlay.anim-enter, .overlay.anim-leave-active {

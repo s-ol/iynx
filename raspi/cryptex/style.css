@@ -1,7 +1,11 @@
+.cryptex > .box {
+  display: flex;
+}
+
 .cryptex .wheel {
   position: relative;
   display: inline-block;
-  width: 40px;
+  flex-grow: 1;
   height: 150px;
   margin: 10px;
   border: 1px solid #000;
