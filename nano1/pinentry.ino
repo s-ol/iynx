@@ -1,23 +1,5 @@
-#include <Keypad.h>
 #include "lcdutils.h"
 
-const byte ROWS = 4; // Four rows
-const byte COLS = 3; // Three columns
-// Define the Keymap
-char keys[ROWS][COLS] = {
-  {'1','2','3'},
-  {'4','5','6'},
-  {'7','8','9'},
-  {'#','0','*'}
-};
-
-byte rowPins[ROWS] = { 19, 18, 17, 16 };
-byte colPins[COLS] = { 15, 14, 10 }; 
-
-// Create the Keypad
-Keypad kpd = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
-
-//char pass[4] = { '1', '3', '3', '7' };
 char pass[4] = { '1', '3', '3', '7' };
 
 void do_pinentry() {

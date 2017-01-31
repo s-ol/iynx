@@ -1,6 +1,8 @@
 #include <Arduino.h>
 #include "lcdutils.h"
 
+LiquidCrystal lcd(19, 18, 14, 15, 16, 17);
+
 void pad_print( const char *str, int pad ) {
   lcd.print(str);
 

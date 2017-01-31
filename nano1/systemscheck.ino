@@ -1,5 +1,7 @@
 #include "lcdutils.h"
 
+extern bool sound_status;
+
 bool check_battery() {
   dot_dot_dot(3000);
   return true;
@@ -7,7 +9,7 @@ bool check_battery() {
 
 bool check_sound() {
   dot_dot_dot(3000);
-  return false;
+  return sound_status;
 }
 
 struct subsystem {
@@ -17,9 +19,9 @@ struct subsystem {
 };
 
 struct subsystem subsystems[3] = {
-  { "battery:", -1, &check_battery },
+  { "power:", -1, &check_battery },
   { "snd-drv:", -1, &check_sound },
-  { "selftest:", -1, &check_battery },
+  { "display:", -1, &check_battery },
 };
 
 void do_subsystems() {
