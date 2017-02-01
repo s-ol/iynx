@@ -1,75 +1,12 @@
-#include <SoftwareSerial.h>
 #include "lcdutils.h"
 #include "keypad.h"
 
-#define SIM_TXD 10
-#define SIM_RXD 11
-
-SoftwareSerial sim(SIM_TXD, SIM_RXD);
-
-void setup_sim(char *pin) {
-  sim.begin(9600);
-  delay(1000);
-
-  // enter pin
-  sim.write("AT+CPIN=\"");
-  sim.write(pin);
-  sim.write("\"\r\n");
-  delay(1000);
-  
-  // SMS encoding = ASCII
-  sim.write("AT+CMGF=1\r\n");
-  delay(1000);
-}
-
-void send_text(char *number, char *text) {
-  // enter number
-  sim.write("AT+CMGS=\"");
-  sim.write(number);
-  sim.write("\"\r\n");
-  delay(1000);
-
-  // enter text
-  sim.write(text);
-  delay(1000);
-
-  // send ESC
-  sim.write((char)26);
-  delay(1000);
-}
 
 void do_bootmsg() {
   lcd.blink();
   fancy_slow_print("Initiating Boot");
   lcd.setCursor(0, 1);
   lcd.noBlink();
-}
-
-void draw_menu() {
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("DBG CTRL: press");
-  lcd.setCursor(0, 1);
-  lcd.print("1-RPT 2-CHK 3-SND");
-}
-
-void setup() {
-  Serial.begin(115200);
-  delay(1000);
-  lcd.begin(16, 2);
-  lcd.clear();
-
-/*
-  setup_sim("");
-  Serial.println("setup");
-  Serial.println("sent");
-*/
-
-//  do_bootmsg();
-//  do_subsystems();
-//  do_pinentry();
-  delay(2000);
-  draw_menu();
 }
 
 
@@ -88,11 +25,9 @@ void do_sound() {
   Serial.println("calibstart");
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("SND CALIBRATION ");
+  lcd.print("move all min/max");
   lcd.setCursor(3, 1);
   lcd.println(">        <   ");
-  lcd.setCursor(4, 1);
-  lcd.blink();
 
   char state = '1' - 1;
   while (true) {
@@ -101,22 +36,29 @@ void do_sound() {
       continue;
     }
     char data = Serial.read();
-   
+
+    int index = 0;
     switch (data) {
       case '1':
+        index++;
       case '2':
+        index++;
       case '3':
+        index++;
       case '4':
+        index++;
       case '5':
+        index++;
       case '6':
+        index++;
       case '7':
-        for (int i = (data - state); i > 0; i--)
-          lcd.print('#');
-        state = max(state, data); 
-        break;
+        index++:
       case '8':
-        lcd.print('#');;
-        lcd.noBlink();
+        index++;
+        lcd.setCursor(4 + index, 1);
+        lcd.print('#');
+        break;
+       case 'D':
         lcd.setCursor(0, 0);
         fancy_slow_print("SND Calibrated!");
         sound_status = true;
@@ -126,12 +68,28 @@ void do_sound() {
   }
 }
 
-void loop() {
-  /*
-   if (sim.available())
-    Serial.write(sim.read());
-  */
+void draw_menu() {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("DBG CTRL: press");
+  lcd.setCursor(0, 1);
+  lcd.print("1-RPT 2-CHK 3-SND");
+}
 
+void setup() {
+  Serial.begin(115200);
+  
+  lcd.begin(16, 2);
+  lcd.clear();
+  
+  do_bootmsg();
+  do_subsystems();
+//  do_pinentry();
+  delay(2000);
+  draw_menu();
+}
+
+void loop() {
   switch (kpd.getKey()) {
     case '1':
       do_report();

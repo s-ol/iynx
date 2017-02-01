@@ -99,3 +99,17 @@ body {
 .anim.left {
   margin-left: -100vw;
 }
+
+video {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+video.anim-enter {
+  opacity: 0;
+}
+.cryptex.anim-enter-active {
+  opacity: 1;
+  transition: opacity 0.6s;
+}

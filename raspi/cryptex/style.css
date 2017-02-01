@@ -31,7 +31,7 @@
 .cryptex.anim-enter, .cryptex.anim-leave-active {
   margin-left: -100vw;
 }
-.cryptex-anim-leave, .cryptex.anim-enter-active {
+.cryptex.anim-leave, .cryptex.anim-enter-active {
   margin-left: 0;
 }
 .cryptex.anim-enter-active, .cryptex.anim-leave-active {
@@ -54,7 +54,7 @@
   transition: opacity 0.3s 0.3s, visibility 0.3s 0.3s, margin-left 0.3s 0.3s;
 }
 
-.cryptex-anim-leave .menu-btn {
+.cryptex.anim-leave .menu-btn {
   opacity: 1;
   visibility: visible;
 }

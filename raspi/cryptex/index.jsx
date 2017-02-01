@@ -50,8 +50,8 @@ class Cryptex extends React.Component {
     ipcRenderer.on('nano2', (event, { sliders }) => {
       sliders = sliders.map(i => Math.floor(i * alphabet.length));
       this.setState({ sliders });
-      if (onChanged)
-        onChanged(sliders.map(i => alphabet[i]).join('') === secret);
+      if (sliders.map(i => alphabet[i]).join('') === secret)
+        onDone();
     });
   }
 

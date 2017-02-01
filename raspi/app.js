@@ -4,13 +4,78 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { ipcRenderer } from 'electron';
 import MenuButton from './menu';
 import Login from './login';
-import Cryptex from './cryptex';
+import Welcome from './welcome';
 import { Files, Preview, personalFiles, workFiles, galleryFiles } from './files';
+import Cryptex from './cryptex';
+import { exec } from 'child_process';
+
+const debug = !!process.env.DEBUG;
 
 const folders = {
   personal: personalFiles,
   work: workFiles,
   gallery: galleryFiles,
+};
+
+const play = name => () => new Audio(`sounds/${name}.wav`).play();
+
+let lastSet = [];
+
+const playSounds = set =>  {
+  lastSet.map(timeout => timeout && clearTimeout(timeout))
+  times.keys().map(sound => {
+    const timeout = times[sound] * 1000;
+    return setTimeout(play(sound), timeout);
+  });
+}
+
+const stages = {
+  audio_restored: {
+
+  },
+  locked_file_accessed: {
+
+  },
+  wires_done: {
+    // WIRES_DONE
+    Puzzle5_IAmGoing: 0,
+    OnHold_Music: 0, // @TODO
+    Puzzle5_IAmGoing: 0,
+    Puzzle5_IAmGoing: 0,
+  },
+  script_opened: {
+
+  },
+  number_entered: {
+
+  },
+  secret_activated: {
+
+  },
+  cryptex_start: {
+    // CRYPTEX_START
+    Puzzle6_Interesting: 0,
+    Puzzle6_HaveYouForgotten: 20,
+    Puzzle6_ComeOnJohn: 80,
+  },
+];
+
+const progress = [
+  'audio_restored',
+  'locked_file_accessed',
+  'wires_done',
+  'script_opened',
+  'number_entered',
+  'secret_activated',
+  'cryptex_start'
+];
+
+let lastIndex = 0;
+const advanceTo = stage => {
+  const i = progress.indexOf(stage);
+  if (index < lastStage) return;
+  playSounds(stages[stage]);
+  lastStage = index;
 };
 
 class App extends React.Component {
@@ -22,7 +87,7 @@ class App extends React.Component {
       binarySolved: false,
       wiringSolved: false,
       menuOpen: false,
-      screen: null,
+      screen: 'welcome',
       fileIndex: null,
       sd: null,
     };
@@ -71,7 +136,7 @@ class App extends React.Component {
         <Login
           key="login"
           secret="abcd"
-          onReturn={() => this.setState({ sd: 'confirmed' })}
+          onDone={() => this.setState({ sd: 'confirmed' })}
         />
       );
     }
@@ -86,13 +151,14 @@ class App extends React.Component {
       );
 
     switch (screen) {
-      case 'system':
+      case 'welcome':
         return (
-          <Cryptex
-            key="system"
-            secret="HELP--ME"
-            onChanged={cryptexSolved => this.setState({ cryptexSolved })}
-            onReturn={() => this.setState({ screen: null })}
+          <Welcome
+            key="welcome"
+            onDone={() => {
+              this.setState({ screen: null })
+              // @TODO: audio?
+            }}
           />
         );
       case 'personal':
@@ -105,6 +171,28 @@ class App extends React.Component {
           onSelect={fileIndex => this.setState({ fileIndex })}
           onReturn={() => this.setState({ screen: null })}
         />;
+      case 'system':
+        return (
+          <Cryptex
+            key="system"
+            secret="HELP--ME"
+            onDone={() => {
+              this.setState({ screen: 'video' });
+              // @TODO: cancel all audio
+            }
+            onReturn={() => this.setState({ screen: null })}
+          />
+        );
+      case 'video':
+        return (
+          <video
+            key="video"
+            className="menu"
+            src="sounds/end.mp4"
+            onEnded={() => exec(debug ? 'echo shutdown > ./test' : 'shutdown -h now')}
+            autoPlay
+          />
+        );
     }
 
     return (

@@ -27,7 +27,7 @@ class Login extends React.Component {
       if (solved) return;
 
       if (key === 'RET') {
-        const { secret, onReturn } = this.props;
+        const { secret, onDone } = this.props;
         const fill = i => () =>
           this.setState({
             input: '*'.repeat(i) + input.slice(i, input.length)
@@ -38,7 +38,7 @@ class Login extends React.Component {
           setTimeout(fill(2),  800);
           setTimeout(fill(3), 1200);
           setTimeout(fill(4), 1600);
-          setTimeout(onReturn, 1700);
+          setTimeout(onDone,  1700);
         }
 
         this.setState({ status: input === secret ? 'solved' : 'error' });

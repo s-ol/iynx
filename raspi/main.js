@@ -7,7 +7,7 @@ import fs from 'fs';
 import config from './config';
 
 const debug = !!process.env.DEBUG;
-let win;
+let win, nano1, nano2;
 
 app
 .on('ready', () => {
@@ -28,6 +28,7 @@ app
   }));
 
   if (debug) win.webContents.openDevTools();
+  win.webContents.on('audio', (event, { msg }) => nano1 && nano1.send(msg));
 
   win.once('ready-to-show', () => {
     win.setKiosk(!debug);
@@ -42,8 +43,8 @@ const clamp = (val, min=0, max=1) => Math.max(min, Math.min(max, val));
 SerialPort.list((err, list) => {
   list.forEach(({ comName, serialNumber }) => {
     if (serialNumber === config.nano1) {
-      new SerialPort(comName, { baudRate: 115200 })
-      .pipe(
+      nano1 = new SerialPort(comName, { baudRate: 115200 });
+      nano1.pipe(
         new Readline()
         .on('data', line => {
           if (!win) return;
@@ -53,8 +54,8 @@ SerialPort.list((err, list) => {
         })
       );
     } else if (serialNumber === config.nano2) {
-      new SerialPort(comName, { baudRate: 115200 })
-      .pipe(
+      nano2 = new SerialPort(comName, { baudRate: 115200 });
+      nano2.pipe(
         new Readline()
         .on('data', line => {
           if (!win) return;
