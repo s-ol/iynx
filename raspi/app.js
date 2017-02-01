@@ -19,6 +19,7 @@ const folders = {
 
 const play = name => () => new Audio(`sounds/${name}.wav`).play();
 
+/*
 let lastSet = [];
 
 const playSounds = set =>  {
@@ -77,6 +78,7 @@ const advanceTo = stage => {
   playSounds(stages[stage]);
   lastStage = index;
 };
+*/
 
 class App extends React.Component {
   constructor () {
@@ -180,10 +182,7 @@ class App extends React.Component {
           <Cryptex
             key="system"
             secret="KATHERYN"
-            onDone={() => {
-              this.setState({ screen: 'video' });
-              // @TODO: cancel all audio
-            }
+            onDone={() => this.setState({ screen: 'video' })}
             onReturn={() => this.setState({ screen: null })}
           />
         );

@@ -5,25 +5,25 @@ import { ipcRenderer } from 'electron';
 const none = { show: false };
 
 class Welcome extends React.Component {
-  super(props) {
+  constructor(props) {
     super(props);
 
     const { onDone } = this.props;
 
     this.state = {
-      sliders: [ null, null, null, null, null, null, null, null ];
+      sliders: [ null, null, null, null, null, null, null, null ],
     };
 
     ipcRenderer.on('nano2', (event, { sliders }) =>
       this.setState({
         sliders: sliders.map((val, index) => {
           let old = this.state.sliders[index];
-          if (val <== 0.01 && !old.startsWith('0'))
+          if (val <= 0.01 && !old.startsWith('0'))
             old = '0' + old;
           if (val >= 0.99 && !old.endsWith('1'))
             old = old + '1';
           return old;
-        }
+        }),
       })
     );
   }
@@ -46,6 +46,7 @@ class Welcome extends React.Component {
   }
 
   render () {
+    return (
     <div className="view">
       <Typist cursor={none}>
         <p>
@@ -70,7 +71,8 @@ class Welcome extends React.Component {
         </p>
       </Typist>
     </div>
+  );
   }
-);
+}
 
 export default Welcome;
