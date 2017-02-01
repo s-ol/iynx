@@ -29,13 +29,14 @@ class Welcome extends React.Component {
   }
 
   shouldComponentUpdate(props, { sliders }) {
+    console.log(sliders);
     const allDone = sliders.every((val, index) => {
       if (val === '01') {
         if (this.state.sliders[index] !== '01')
           ipcRenderer.send('audio', index);
         return true;
       }
-      return false;
+      return true;
     });
 
     if (allDone) {

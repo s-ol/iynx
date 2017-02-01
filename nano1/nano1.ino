@@ -15,7 +15,7 @@ void do_report() {
   lcd.setCursor(0, 0);
   lcd.print("BUG REPORT");
   lcd.setCursor(0, 1);
-  lcd.print("password is abcd");
+  lcd.print("password is RUN");
   
   char key = kpd.waitForKey();
 }
@@ -52,10 +52,10 @@ void do_sound() {
       case '6':
         index++;
       case '7':
-        index++:
+        index++;
       case '8':
         index++;
-        lcd.setCursor(4 + index, 1);
+        lcd.setCursor(3 + index, 1);
         lcd.print('#');
         break;
        case 'D':
