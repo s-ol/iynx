@@ -4,16 +4,19 @@
   height: 280px;
 }
 
-.files table {
+.files table, .overlay table {
   width: 100%;
+  text-align: left;
 }
 
 .files table tr:nth-of-type(even) {
   background: rgba(0, 255, 255, 0.13);
 }
 
-.overlay > .box {
+.overlay > .border-trbl {
   position: absolute;
+  display: flex;
+  flex-direction: column;
 
   top: 0;
   left: 0;
@@ -23,9 +26,14 @@
   padding: 26px;
 }
 
+.overlay > .border-trbl > div {
+  overflow: hidden;
+  overflow-y: auto;
+}
+
 .overlay .back-btn {
   position: absolute;
-  bottom: -70px;
+  bottom: 0;
   right: 0;
 
   font-size: 26px;

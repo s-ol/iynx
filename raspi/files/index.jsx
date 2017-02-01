@@ -13,12 +13,12 @@ export const Preview = ({ title, date, content, folder, onReturn }) => (
     <div className="box border-trbl">
       <h2>{title} | {folder} | {date}</h2>
       {content}
-      <div
-        className="box back-btn"
-        onClick={onReturn}
-      >
-        BACK
-      </div>
+    </div>
+    <div
+      className="box back-btn"
+      onClick={onReturn}
+    >
+      BACK
     </div>
   </div>
 );

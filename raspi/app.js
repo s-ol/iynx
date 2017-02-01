@@ -81,7 +81,7 @@ class App extends React.Component {
         <Preview
           {...folders[screen][fileIndex]}
           folder={screen}
-          onReturn={() => this.setState({ screen: null, fileIndex: null })}
+          onReturn={() => this.setState({ fileIndex: null })}
         />
       );
 
@@ -118,7 +118,7 @@ class App extends React.Component {
           <MenuButton
             key="iynx"
             title="iynx"
-            style={{ left: 56, top: 319, opacity: 0.7 }}
+            style={{ left: 56, top: 319, opacity: menuOpen && 0.7 }}
             disabled={menuOpen}
             onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}
           />

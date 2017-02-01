@@ -1,5 +1,7 @@
 .menu-btn {
   position: absolute;
+
+  transition: opacity 0.3s;
 }
 
 .menu-btn > div,
