@@ -89,7 +89,7 @@ class App extends React.Component {
       menuOpen: false,
       screen: 'welcome',
       fileIndex: null,
-      sd: null,
+      sd: 'connected',
     };
 
     this.reset = () => this.setState({ screen: null });
@@ -111,7 +111,7 @@ class App extends React.Component {
       this.setState({
         wiringSolved: wires,
         binarySolved: leds === '01001101',
-        sd: nextSd,
+//        sd: nextSd,
       })
     });
   }
@@ -193,7 +193,7 @@ class App extends React.Component {
             key="video"
             className="menu"
             src="sounds/end.mp4"
-            onEnded={() => exec(debug ? 'echo shutdown > ./test' : 'shutdown -h now')}
+            onEnded={() => exec(debug ? 'echo shutdown > ./test' : 'sudo shutdown -h now')}
             autoPlay
           />
         );
