@@ -1,6 +1,7 @@
 int SECURITY_PIN = 12;
 int SLIDER_PINS[8] = { A0, A1, A2, A3, A4, A5, A6, A7 };
-int LED_PINS[8] = { 2, 3, 4, 5, 6, 7, 8, 9 };
+//int LED_PINS[8] = { 2, 3, 4, 5, 6, 7, 8, 9 };
+int LED_PINS[8] = { 3, 4, 5, 6, 7, 8, 9, 10 };
 
 void setup() {
   Serial.begin(115200);

@@ -94,22 +94,26 @@ class App extends React.Component {
 
     this.reset = () => this.setState({ screen: null });
 
+    /*
     ipcRenderer.on('sd', (event, connected) => {
       const { sd } = this.state;
 
       if (!connected) this.setState({ sd: null });
       else if (!sd) this.setState({ sd: 'connected' });
     });
+    */
 
-    ipcRenderer.on('nano2', (event, { leds, wires }) => {
-      console.log( leds );
+    ipcRenderer.on('nano2', (event, { leds, wires, sd }) => {
+      let nextSd = undefined;
+      if (!sd) nextSd = null;
+      else if (!this.state.sd) nextSd = 'connected';
+
       this.setState({
         wiringSolved: wires,
         binarySolved: leds === '01001101',
+        sd: nextSd,
       })
     });
-
-    ipcRenderer.on('nano1', calibrating => this.setState({ calibrating }));
   }
 
   componentDidMount() {
@@ -135,7 +139,7 @@ class App extends React.Component {
       return (
         <Login
           key="login"
-          secret="abcd"
+          secret="run"
           onDone={() => this.setState({ sd: 'confirmed' })}
         />
       );
@@ -175,7 +179,7 @@ class App extends React.Component {
         return (
           <Cryptex
             key="system"
-            secret="HELP--ME"
+            secret="KATHERYN"
             onDone={() => {
               this.setState({ screen: 'video' });
               // @TODO: cancel all audio
@@ -247,7 +251,7 @@ class App extends React.Component {
                 transitionDelay: '600ms',
               }}
               onClick={() => this.setState({ screen: 'work' })}
-              disabled={!wiringSolved}
+              disabled={true || !wiringSolved}
             />),
           ]}
         </ReactCSSTransitionGroup>

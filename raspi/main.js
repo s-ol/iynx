@@ -63,6 +63,7 @@ SerialPort.list((err, list) => {
           const parts = line.split(' ');
           win.webContents.send('nano2', {
             security: parts[0] === '1' ? true : false,
+            sd: parts[0] === '1' ? true : false,
             wires: parts[1] === '1' ? true : false,
             sliders: parts.slice(1, 9).map(n => clamp(parseInt(n) / 1024)),
             leds: parts.slice(9, 17).reverse().join(''),
@@ -73,6 +74,7 @@ SerialPort.list((err, list) => {
   });
 });
 
+/*
 setInterval(
   () => win && win.webContents.send(
     'sd',
@@ -80,3 +82,4 @@ setInterval(
   ),
   500
 );
+*/
