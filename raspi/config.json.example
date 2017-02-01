@@ -1,5 +1,5 @@
 {
-  "nano1": "/dev/ttyUSB1",
-  "nano2": "/dev/ttyUSB0",
+  "nano1": "FTDI_FT232R_USB_UART_AI04GQMF",
+  "nano2": "1a86_USB2.0-Serial",
   "sd": "/dev/sda1"
 }

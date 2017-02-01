@@ -1,10 +1,10 @@
 import React from 'react';
 import memoize from 'memoization';
 
-const MenuButton = memoize(({ title, icon, top, left, onClick }) => (
-  <div className="menu-btn" style={{ top, left }}>
+const MenuButton = memoize(({ title, icon, style, onClick, disabled }) => (
+  <div className={`menu-btn${disabled ? ' disabled' : ''}`} style={style}>
     <img src={`images/${title}.png`} />
-    <div onClick={onClick} />
+    <div onClick={!disabled && onClick} />
   </div>
 ));
 

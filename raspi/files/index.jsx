@@ -47,8 +47,7 @@ export const Files = ({ title, files, onSelect, onReturn }) => (
     <MenuButton
       onClick={onReturn}
       title="iynx"
-      left={656}
-      top={319}
+      style={{ left: 656, top: 319 }}
     />
   </div>
 );

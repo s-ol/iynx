@@ -45,13 +45,11 @@ class Cryptex extends React.Component {
 
     this.state = {
       sliders: [null, null, null, null, null, null, null, null, null, null],
-      security: false,
-      wires: false,
     };
 
-    ipcRenderer.on('nano2', (event, { sliders, security, wires }) => {
+    ipcRenderer.on('nano2', (event, { sliders }) => {
       sliders = sliders.map(i => Math.floor(i * alphabet.length));
-      this.setState({ sliders, security, wires });
+      this.setState({ sliders });
       if (onChanged)
         onChanged(sliders.map(i => alphabet[i]).join('') === secret);
     });
@@ -70,8 +68,7 @@ class Cryptex extends React.Component {
         <MenuButton
           onClick={onReturn}
           title="iynx"
-          left={656}
-          top={319}
+          style={{ left: 656, top: 319 }}
         />
       </div>
     );

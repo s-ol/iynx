@@ -39,37 +39,43 @@ app
 
 const clamp = (val, min=0, max=1) => Math.max(min, Math.min(max, val));
 
-new SerialPort(config.nano1, { baudRate: 115200 })
-.pipe(
-  new Readline()
-  .on('data', line => {
-    if (!win) return;
+SerialPort.list((err, list) => {
+  list.forEach(({ comName, serialNumber }) => {
+    if (serialNumber === config.nano1) {
+      new SerialPort(comName, { baudRate: 115200 })
+      .pipe(
+        new Readline()
+        .on('data', line => {
+          if (!win) return;
 
-    const parts = line.split(' ');
-    win.webContents.send('nano1', {
-      calibration: parts[0] === '1' ? true : false,
-      number: parts[1] === '1' ? true : false,
-    });
-  })
-);
+          if (line.startsWith('calibstart'))
+            win.webContents.send('nano1', { calibration: true });
+        })
+      );
+    } else if (serialNumber === config.nano2) {
+      new SerialPort(comName, { baudRate: 115200 })
+      .pipe(
+        new Readline()
+        .on('data', line => {
+          if (!win) return;
 
-new SerialPort(config.nano2, { baudRate: 115200 })
-.pipe(
-  new Readline()
-  .on('data', line => {
-    if (!win) return;
-
-    const parts = line.split(' ');
-    win.webContents.send('nano2', {
-      security: parts[0] === '1' ? true : false,
-      wires: parts[1] === '1' ? true : false,
-      sliders: parts.slice(2, 10).map(n => clamp(parseInt(n) / 1024)),
-      leds: parts.slice(10, 18).map(n => clamp(parseInt(n) / 1024)),
-    });
-  })
-);
+          const parts = line.split(' ');
+          win.webContents.send('nano2', {
+            security: parts[0] === '1' ? true : false,
+            wires: parts[1] === '1' ? true : false,
+            sliders: parts.slice(1, 9).map(n => clamp(parseInt(n) / 1024)),
+            leds: parts.slice(9, 17).reverse().join(''),
+          });
+        })
+      );
+    }
+  });
+});
 
 setInterval(
-  () => win && win.webContents.send('sd', fs.existsSync(config.sd)),
+  () => win && win.webContents.send(
+    'sd',
+    fs.existsSync(config.sd) || config.skipSD
+  ),
   500
 );

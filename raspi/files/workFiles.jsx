@@ -2,48 +2,181 @@ import React from 'react';
 
 export const workFiles = [
   {
-    title: 'Holiday Leave',
-    date: 'April 01, 2025',
+    title: 'Report: IYNX_v5_Test_5.74b',
+    date: '25 June, 2027',
     content: (
       <div>
         <p>
-          Subject: Holid4y L3ave
-          Date of test: 27/05/2025
+          Subject: Report: IYNX_v5_Test_5.74b
+          Date of test: 24/06/2027
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-          rebum.  Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-          ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-          elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-          aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-          dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-          est Lorem ipsum dolor sit amet.
+		A routine test before shipping conducted to ensure there are no bugs in IYNX’s system, and to 
+		ensure all features are running as intended. Everything was in order with no errors until
+		
+								***CONTENT CORRUPTED***
         </p>
       </div>
     )
   },
   {
-    title: 'IYNX AI',
-    date: 'April 99, 2025',
+    title: 'Progress: IYNX_v1',
+    date: '03 December, 2022',
+    content: (
+      <div>
+        <p>
+          Subject: IYNX_v1
+          Date of test: 03 December, 2022
+        </p>
+        <p>
+		Just over a year since we started and everything is running smoothly with our first working 
+		prototype currently functioning. Sometimes it misunderstands our requests, for example we asked 
+		it to play some music and it put on Nickleback. Strange. Something we definitely must fix.
+        </p>
+      </div>
+    )
+  },
+  {
+    title: 'Report: IYNX_v3.3_Test',
+    date: '01 April, 2025',
     content: (
       <div>
         <p>
           Subject: IYNX
-          Date of test: 27/05/2025
+          Date of test: 27/03/2025
         </p>
         <p>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-          nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-          sed diam voluptua. At vero eos et accusam et justo duo dolores et ea
-          rebum.  Stet clita kasd gubergren, no sea takimata sanctus est Lorem
-          ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
-          elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-          aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo
-          dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus
-          est Lorem ipsum dolor sit amet.
+		We tested IYNX’s empathy code, which has been in the works since the project began. We put 
+		IYNX in various hypothetical situations, such as what it would do if it caught a mother stealing 
+		bread from a bakery to feed her family, and monitored its choices while keeping an eye on its 
+		algorithm to see how it adapts and learns from immediate past experiences. IYNX seems to be
+		learning and changing its ‘mind’ as its information bank grows to see how decisions will affect 
+		others, just as we’ve wanted. However it seems to be trying to bypass this code at times, but it 
+		could just be a glitch. Nevertheless, it’s something we must investigate. 
         </p>
+      </div>
+    )
+  },
+  {
+    title: 'A.I. Functions',
+    date: '01 April, 2025',
+	locked: true,
+    content: (
+      <div>
+        <p>
+          Subject: IYNX
+          Date: 18 November, 2026
+        </p>
+        <p>
+		Apply Binary Override Code to the red 8-Bit Override Switches to enable functions. Refer to file ‘A 
+		Guide: Decimal to Binary Conversion’ to convert the Override Codes into binary and apply to the 
+		red 8-bit Override Switches.
+		
+										***CONTENT CORRUPTED***
+		
+		<table style = "width:100%">
+		<tr>
+			<th>FUNCTION NAME</th>
+			<th>BINARY OVERRIDE CODE</th>
+			<th>DESCRIPTION</th>
+		</tr>
+		<tr>
+			<td>Enable Hardware Access</td>
+			<td>77</td>
+			<td>Debug purposes only. Enables IYNX to discover and perform introspection on hardware.</td>
+		</tr>
+		<tr>
+			<td>Pairing Mode</td>
+			<td>78</td>
+			<td>Enables IYNX to pair with nearby instances.</td>
+		</tr>
+		<tr>
+			<td>Disable Sleep Mode</td>
+			<td>79</td>
+			<td>Sleep mode of IYNX is disabled.</td>
+		</tr>
+		<tr>
+			<td>Emulate Siri Voicee</td>
+			<td>80</td>
+			<td>Not yet implemented.</td>
+		</tr>
+		</table>
+									 ***CONTENT CORRUPTED***
+										Page 78/605
+		</p>
+      </div>
+    )
+  },
+  {
+    title: 'A Guide: Decimal to Binary Base 2 Conversion',
+    date: '18 November, 2026',
+	locked: true,
+    content: (
+      <div>
+        <p>
+          Subject: IYNX
+          Date: 18 November, 2026
+        </p>
+        <p>
+		Apply Binary Override Code to the red 8-Bit Override Switches to enable functions. Refer to file ‘A 
+		Guide: Decimal to Binary Conversion’ to convert the Override Codes into binary and apply to the 
+		red 8-bit Override Switches.
+		
+		<table style = "width:100%">
+		<tr>
+			<th>BINARY</th>
+			<td>0</td>
+			<td>0</td>
+			<td>0</td>
+			<td>0</td>
+			<td>0</td>
+			<td>0</td>
+			<td>0</td>
+			<td>0</td>
+		</tr>
+		<tr>
+			<th>WEIGHT</th>
+			<td>x128</td>
+			<td>x64</td>
+			<td>x32</td>
+			<td>x16</td>
+			<td>x8</td>
+			<td>x4</td>
+			<td>x2</td>
+			<td>x1</td>
+		</tr>
+		<tr>
+			<th>POWER</th>
+			<td>2<sup>7</sup></td>
+			<td>2<sup>6</sup></td>
+			<td>2<sup>5</sup></td>
+			<td>2<sup>4</sup></td>
+			<td>2<sup>3</sup></td>
+			<td>2<sup>2</sup></td>
+			<td>2<sup>1</sup></td>
+			<td>2<sup>0</sup></td>
+		</tr>
+		</table>
+		
+		Starting with the highest position (27 or 128 for 8 bits), compare your value to each weight in 
+		order. If the weight is smaller than or equal to your number, subtract it from your value and 
+		continue with that. In this case the bit for that position is 1 (on); if the weight was larger than the 
+		remaining value the bit is 0 (off).
+		
+		Example: 118
+		
+		118 >= 128? no: 0
+		118 >= 64? yes: 1, continuing with 118 -  64 = 54
+		54 >= 32? yes: 1, continuing with 54 - 32 = 22
+		22 >= 16? yes: 1, continuing with 22 - 16 = 6
+		6 >= 8? no: 0
+		6 >= 4? yes: 1, continuing with 6 - 4 = 2
+		2 >= 2? yes: 1, continuing with 2 - 2 = 0
+		0 >= 1? no: 0
+		
+		So we end up with binary 01110110 for decimal 118.
+		
+		</p>
       </div>
     )
   },
