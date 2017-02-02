@@ -71,9 +71,9 @@ void do_sound() {
 void draw_menu() {
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("DBG CTRL: press");
+  lcd.print("1-REPORT 2-CHECK");
   lcd.setCursor(0, 1);
-  lcd.print("1-RPT 2-CHK 3-SND");
+  lcd.print("3-SOUND CALIB.");
 }
 
 void setup() {

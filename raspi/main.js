@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, ipcMain, BrowserWindow } from 'electron';
 import SerialPort from 'serialport';
 import Readline from './lineparser';
 import path from 'path';
@@ -28,8 +28,8 @@ app
   }));
 
   if (debug) win.webContents.openDevTools();
-  win.webContents.on('debug', (event, data) => console.log(data));
-  win.webContents.on('audio', (event, { msg }) => {
+  ipcMain.on('debug', (event, data) => console.log(data));
+  ipcMain.on('audio', (event, { msg }) => {
     if (nano1) nano1.send(msg)
     console.log('nano1', msg);
   });
