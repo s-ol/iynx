@@ -81,9 +81,9 @@ export const workFiles = [
             <th>DESCRIPTION</th>
         </tr>
         <tr>
-            <td>Enable Hardware Access</td>
+            <td>Disable Permissions System</td>
             <td>77</td>
-            <td>Debug purposes only. Enables IYNX to discover and perform introspection on hardware.</td>
+            <td>Debug purposes only. Disables ALL permission checks.</td>
         </tr>
         <tr>
             <td>Pairing Mode</td>
