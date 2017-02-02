@@ -11,33 +11,37 @@ class Welcome extends React.Component {
     const { onDone } = this.props;
 
     this.state = {
-      sliders: [ null, null, null, null, null, null, null, null ],
+      sliders: [ '', '', '', '', '', '', '', '' ],
     };
 
-    ipcRenderer.on('nano2', (event, { sliders }) =>
-      this.setState({
-        sliders: sliders.map((val, index) => {
-          let old = this.state.sliders[index];
-          if (val <= 0.01 && !old.startsWith('0'))
-            old = '0' + old;
-          if (val >= 0.99 && !old.endsWith('1'))
-            old = old + '1';
-          return old;
-        }),
-      })
-    );
+    ipcRenderer.once('calibration', => {
+      ipcRenderer.on('nano2', (event, { sliders }) =>
+        this.setState({
+          sliders: sliders.map((val, index) => {
+            let old = this.state.sliders[index];
+            if (val <= 0.01 && !old.startsWith('0'))
+              old = '0' + old;
+            if (val >= 0.99 && !old.endsWith('1'))
+              old = old + '1';
+            return old;
+          }),
+        })
+      );
+    });
   }
 
   shouldComponentUpdate(props, { sliders }) {
-    console.log(sliders);
+    const { onDone } = this.props;
+
     ipcRenderer.send('debug', sliders);
     const allDone = sliders.every((val, index) => {
       if (val === '01') {
-        if (this.state.sliders[index] !== '01')
-          ipcRenderer.send('audio', index);
+        if (this.state.sliders[index] !== '01') {
+          ipcRenderer.send('audio', 8-index);
+        }
         return true;
       }
-      return true;
+      return false;
     });
 
     if (allDone) {
@@ -48,9 +52,8 @@ class Welcome extends React.Component {
   }
 
   render () {
-	const { onDone } = this.props;
     return (
-    <div className="view" onClick={onDone}>
+    <div className="view">
       <Typist cursor={none}>
         <p>
           Welcome back John<br/>

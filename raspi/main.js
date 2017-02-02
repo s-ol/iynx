@@ -28,10 +28,10 @@ app
   }));
 
   if (debug) win.webContents.openDevTools();
-  ipcMain.on('debug', (event, data) => console.log(data));
-  ipcMain.on('audio', (event, { msg }) => {
-    if (nano1) nano1.send(msg)
-    console.log('nano1', msg);
+  ipcMain.on('debug', (event, data) => console.log('debug', data));
+  ipcMain.on('audio', (event, msg) => {
+    console.log('write', msg);
+    if (nano1) nano1.write(String(msg));
   });
 
   win.once('ready-to-show', () => {
@@ -54,7 +54,7 @@ SerialPort.list((err, list) => {
           if (!win) return;
 
           if (line.startsWith('calibstart'))
-            win.webContents.send('nano1', { calibration: true });
+            win.webContents.send('calibration');
         })
       );
     } else if (serialNumber === config.nano2) {
