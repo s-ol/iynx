@@ -41,7 +41,7 @@ class Cryptex extends React.Component {
   constructor(props) {
     super(props);
 
-    const { secret, onChanged } = this.props;
+    const { secret, onDone } = this.props;
 
     this.state = {
       sliders: [null, null, null, null, null, null, null, null, null, null],
@@ -77,7 +77,7 @@ class Cryptex extends React.Component {
 
 Cryptex.propTypes = {
   secret: React.PropTypes.string,
-  onChanged: React.PropTypes.func,
+  onDone: React.PropTypes.func,
   onReturn: React.PropTypes.func,
 };
 
