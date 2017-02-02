@@ -22,6 +22,13 @@ void do_report() {
 
 bool sound_status = false;
 void do_sound() {
+  if (sound_status) {
+    fancy_slow_print("sound is already");
+    lcd.setCursor(0, 1);
+    fancy_slow_print("calibrated.");
+    kpd.waitForKey();
+    return;
+  }
   Serial.println("calibstart");
   lcd.clear();
   lcd.setCursor(0, 0);
@@ -31,6 +38,8 @@ void do_sound() {
 
   char state = '1' - 1;
   while (true) {
+    if (kpd.getKey() != NO_KEY) return;
+    
     if (!Serial.available() > 0) {
       delay(50);
       continue;
@@ -59,10 +68,11 @@ void do_sound() {
         lcd.print('#');
         break;
        case 'D':
+        lcd.clear();       
         lcd.setCursor(0, 0);
         fancy_slow_print("SND Calibrated!");
         sound_status = true;
-        delay(800);
+        kpd.waitForKey();
         return;
     }
   }
@@ -99,19 +109,13 @@ void loop() {
       lcd.clear();
       fancy_slow_print("Checking systems...");
       do_subsystems();
-      delay(1000);
+      kpd.waitForKey();
       draw_menu();
       break;
     case '3':
       do_sound();
       draw_menu();  
       break;
-    default:
-      if (Serial.available() > 0) {
-        char data = Serial.read();
-        //if (data == 0x13)
-        //    send_text("");
-      }
   }
   delay(100);
 }
