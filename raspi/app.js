@@ -17,16 +17,20 @@ const folders = {
   gallery: galleryFiles,
 };
 
-const error = () => play(`Error_Audio${Math.floor(Math.random()*4)}`);
-const blip = () => play(`Audio_Interface${Math.floor(Math.random()*5)}`);
+const error = () => play(`Error_Audio${Math.floor(Math.random()*4)}`)();
+const blip = () => play(`Audio_Interface${Math.floor(Math.random()*5)}`)();
 const play = name => () => new Audio(`sounds/${name}.wav`).play();
+
+window.error = error;
+window.blip = blip;
+window.play = play;
 
 let lastSet = [];
 
 const playSounds = set =>  {
   lastSet.map(timeout => timeout && clearTimeout(timeout))
-  times.keys().map(sound => {
-    const timeout = times[sound] * 1000;
+  Object.keys(set).map(sound => {
+    const timeout = set[sound] * 1000;
     return setTimeout(play(sound), timeout);
   });
 }
@@ -57,13 +61,14 @@ const progress = [
   'cryptex_start'
 ];
 
-let lastIndex = 0;
+let lastStage = -1;
 const advanceTo = stage => {
   const i = progress.indexOf(stage);
-  if (index <= lastStage) return;
+  if (i <= lastStage) return;
   playSounds(stages[stage]);
-  lastStage = index;
+  lastStage = i;
 };
+window.advanceTo = advanceTo;
 
 class App extends React.PureComponent {
   constructor () {

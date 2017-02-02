@@ -27,7 +27,7 @@ app
     slashes: true
   }));
 
-  if (debug) setTimeout(() => win.webContents.openDevTools(), 30000);
+  if (debug) win.webContents.openDevTools();
   ipcMain.on('debug', (event, data) => console.log('debug', data));
   ipcMain.on('audio', (event, msg) => {
     console.log('write', msg);
@@ -35,7 +35,7 @@ app
   });
 
   win.once('ready-to-show', () => {
-    win.setKiosk(true || !debug);
+    win.setKiosk(!debug);
     win.show()
   });
   win.once('closed', () => { win = null });
