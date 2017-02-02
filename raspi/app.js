@@ -219,7 +219,7 @@ class App extends React.Component {
               title="system"
               style={{ left: 134, top: 274 }}
               onClick={() => this.setState({ screen: 'system' })}
-              disabled={false && !binarySolved}
+              disabled={!binarySolved}
             />),
             (<MenuButton
               key="gallery"

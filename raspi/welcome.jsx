@@ -15,40 +15,39 @@ class Welcome extends React.Component {
     };
 
     ipcRenderer.once('calibration', ()=> {
-      ipcRenderer.on('nano2', (event, { sliders }) =>
-        this.setState({
-          sliders: sliders.map((val, index) => {
-            let old = this.state.sliders[index];
-            if (val <= 0.01 && !old.startsWith('0'))
-              old = '0' + old;
-            if (val >= 0.99 && !old.endsWith('1'))
-              old = old + '1';
-            return old;
-          }),
-        })
-      );
+      ipcRenderer.on('nano2', (event, { sliders }) => {
+        const nextSliders = sliders.map((val, index) => {
+          let old = this.state.sliders[index];
+          if (val <= 0.01 && !old.startsWith('0'))
+            old = '0' + old;
+          if (val >= 0.99 && !old.endsWith('1'))
+            old = old + '1';
+          return old;
+        });
+        ipcRenderer.send('debug', nextSliders.join(',') !== this.state.sliders.join(','));
+        if (nextSliders.join(',') !== this.state.sliders.join(','))
+	  this.setState({ sliders: newSliders });
+      });
     });
   }
 
-  shouldComponentUpdate(props, { sliders }) {
+  shouldComponentUpdate({ onDone }, { sliders }) {
+    ipcRenderer.send('debug', props.onDone !== this.props.onDone || sliders !== this.state.sliders);
+    return props.onDone !== this.props.onDone || sliders !== this.state.sliders;
+  }
+
+  componentDidUpdate() {
     const { onDone } = this.props;
+    const { sliders } = this.state;
 
-    ipcRenderer.send('debug', sliders);
-    const allDone = sliders.every((val, index) => {
-      if (val === '01') {
-        if (this.state.sliders[index] !== '01') {
-          ipcRenderer.send('audio', 8-index);
-        }
-        return true;
-      }
-      return false;
-    });
+    ipcRenderer.send('audio', sliders.map((val, index) =>
+      val === '01' ? String(8-index) : ''
+    ).join(''));
 
-    if (allDone) {
+    if (sliders.every(val => val === '01')) {
       ipcRenderer.send('audio', 'D');
       onDone();
     }
-    return false;
   }
 
   render () {

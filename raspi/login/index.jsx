@@ -37,8 +37,7 @@ class Login extends React.Component {
           setTimeout(fill(1),  400);
           setTimeout(fill(2),  800);
           setTimeout(fill(3), 1200);
-          setTimeout(fill(4), 1600);
-          setTimeout(onDone,  1700);
+          setTimeout(onDone,  1400);
         }
 
         this.setState({ status: input === secret ? 'solved' : 'error' });
