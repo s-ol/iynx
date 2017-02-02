@@ -30,13 +30,11 @@ export const Files = ({ title, files, onSelect, onReturn }) => (
       <table>
         <tbody>
           <tr>
-            <th></th>
             <th>Title</th>
             <th>Date</th>
           </tr>
           {files.map(({ title, date }, index) => (
             <tr key={index} onClick={() => onSelect(index)}>
-              <td>icon</td>
               <td>{title}</td>
               <td>{date}</td>
             </tr>

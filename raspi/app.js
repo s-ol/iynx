@@ -80,7 +80,7 @@ const advanceTo = stage => {
 };
 */
 
-class App extends React.Component {
+class App extends React.PureComponent {
   constructor () {
     super();
 
@@ -120,9 +120,6 @@ class App extends React.Component {
 
   componentDidMount() {
     window.app = this;
-  }
-
-  componentWillUpdate(props, { cryptexSolved }) {
   }
 
   getContent() {

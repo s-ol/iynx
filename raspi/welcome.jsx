@@ -4,7 +4,7 @@ import { ipcRenderer } from 'electron';
 
 const none = { show: false };
 
-class Welcome extends React.Component {
+class Welcome extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -18,22 +18,16 @@ class Welcome extends React.Component {
       ipcRenderer.on('nano2', (event, { sliders }) => {
         const nextSliders = sliders.map((val, index) => {
           let old = this.state.sliders[index];
-          if (val <= 0.01 && !old.startsWith('0'))
+          if (val <= 0.06 && !old.startsWith('0'))
             old = '0' + old;
-          if (val >= 0.99 && !old.endsWith('1'))
+          if (val >= 0.94 && !old.endsWith('1'))
             old = old + '1';
           return old;
         });
-        ipcRenderer.send('debug', nextSliders.join(',') !== this.state.sliders.join(','));
         if (nextSliders.join(',') !== this.state.sliders.join(','))
-	  this.setState({ sliders: newSliders });
+	  this.setState({ sliders: nextSliders });
       });
     });
-  }
-
-  shouldComponentUpdate({ onDone }, { sliders }) {
-    ipcRenderer.send('debug', props.onDone !== this.props.onDone || sliders !== this.state.sliders);
-    return props.onDone !== this.props.onDone || sliders !== this.state.sliders;
   }
 
   componentDidUpdate() {
@@ -52,7 +46,7 @@ class Welcome extends React.Component {
 
   render () {
     return (
-    <div className="view">
+    <div className="view" style={{fontSize: '1.3em' }}>
       <Typist cursor={none}>
         <p>
           Welcome back John<br/>

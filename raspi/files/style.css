@@ -10,6 +10,7 @@
 }
 
 .files table tr:nth-of-type(even) {
+  font-size: 1.2em;
   background: rgba(0, 255, 255, 0.13);
 }
 
