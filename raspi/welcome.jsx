@@ -14,7 +14,7 @@ class Welcome extends React.Component {
       sliders: [ '', '', '', '', '', '', '', '' ],
     };
 
-    ipcRenderer.once('calibration', => {
+    ipcRenderer.once('calibration', ()=> {
       ipcRenderer.on('nano2', (event, { sliders }) =>
         this.setState({
           sliders: sliders.map((val, index) => {
