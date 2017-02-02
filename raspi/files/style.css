@@ -9,8 +9,11 @@
   text-align: left;
 }
 
-.files table tr:nth-of-type(even) {
+.files table {
   font-size: 1.2em;
+}
+
+.files table tr:nth-of-type(even) {
   background: rgba(0, 255, 255, 0.13);
 }
 
