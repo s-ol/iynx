@@ -219,7 +219,7 @@ class App extends React.Component {
               title="system"
               style={{ left: 134, top: 274 }}
               onClick={() => this.setState({ screen: 'system' })}
-              disabled={!binarySolved}
+              disabled={false && !binarySolved}
             />),
             (<MenuButton
               key="gallery"
@@ -250,7 +250,7 @@ class App extends React.Component {
                 transitionDelay: '600ms',
               }}
               onClick={() => this.setState({ screen: 'work' })}
-              disabled={true || !wiringSolved}
+              disabled={false && !wiringSolved}
             />),
           ]}
         </ReactCSSTransitionGroup>

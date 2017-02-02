@@ -30,6 +30,7 @@ class Welcome extends React.Component {
 
   shouldComponentUpdate(props, { sliders }) {
     console.log(sliders);
+    ipcRenderer.send('debug', sliders);
     const allDone = sliders.every((val, index) => {
       if (val === '01') {
         if (this.state.sliders[index] !== '01')
@@ -47,8 +48,9 @@ class Welcome extends React.Component {
   }
 
   render () {
+	const { onDone } = this.props;
     return (
-    <div className="view">
+    <div className="view" onClick={onDone}>
       <Typist cursor={none}>
         <p>
           Welcome back John<br/>

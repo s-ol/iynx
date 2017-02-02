@@ -7,9 +7,9 @@ const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ-'.split('');
 
 const fillers = 2;
 const extendedAlphabet = [
-...alphabet.slice(alphabet.length - fillers - 1, alphabet.length - 1),
-...alphabet,
-...alphabet.slice(0, fillers),
+  ...alphabet.slice(alphabet.length - fillers - 1, alphabet.length - 1),
+  ...alphabet,
+  ...alphabet.slice(0, fillers),
 ];
 
 const Wheel = memoize(({ offset }) => {

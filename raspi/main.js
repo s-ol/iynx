@@ -28,7 +28,11 @@ app
   }));
 
   if (debug) win.webContents.openDevTools();
-  win.webContents.on('audio', (event, { msg }) => nano1 && nano1.send(msg));
+  win.webContents.on('debug', (event, data) => console.log(data));
+  win.webContents.on('audio', (event, { msg }) => {
+    if (nano1) nano1.send(msg)
+    console.log('nano1', msg);
+  });
 
   win.once('ready-to-show', () => {
     win.setKiosk(!debug);
@@ -65,8 +69,8 @@ SerialPort.list((err, list) => {
             security: parts[0] === '1' ? true : false,
             sd: parts[0] === '1' ? true : false,
             wires: parts[1] === '1' ? true : false,
-            sliders: parts.slice(1, 9).map(n => clamp(parseInt(n) / 1024)),
-            leds: parts.slice(9, 17).reverse().join(''),
+            sliders: parts.slice(2, 10).map(n => clamp(parseInt(n) / 1024)),
+            leds: parts.slice(10, 18).join(''),
           });
         })
       );
