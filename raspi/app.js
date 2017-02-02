@@ -17,9 +17,10 @@ const folders = {
   gallery: galleryFiles,
 };
 
+const error = () => play(`Error_Audio${Math.floor(Math.random()*4)}`);
+const blip = () => play(`Audio_Interface${Math.floor(Math.random()*5)}`);
 const play = name => () => new Audio(`sounds/${name}.wav`).play();
 
-/*
 let lastSet = [];
 
 const playSounds = set =>  {
@@ -32,53 +33,37 @@ const playSounds = set =>  {
 
 const stages = {
   audio_restored: {
-
+    Puzzle3_WellDoneJohn: 0,
+    Puzzle3_IHaveMissed: 5,
+    Puzzle5_IAmGoing: 15,
+    OnHold_Music: 20,
+    Puzzle5_AllPermissionsAppear: 36,
+    Puzzle5_IWillRequire: 47,
+    Puzzle5_IWillRequire: 87,
   },
-  locked_file_accessed: {
-
-  },
-  wires_done: {
-    // WIRES_DONE
-    Puzzle5_IAmGoing: 0,
-    OnHold_Music: 0, // @TODO
-    Puzzle5_IAmGoing: 0,
-    Puzzle5_IAmGoing: 0,
-  },
-  script_opened: {
-
-  },
-  number_entered: {
-
-  },
-  secret_activated: {
-
+  binary_solved: {
+    Puzzle6_Remarkable: 0,
   },
   cryptex_start: {
-    // CRYPTEX_START
     Puzzle6_Interesting: 0,
     Puzzle6_HaveYouForgotten: 20,
     Puzzle6_ComeOnJohn: 80,
   },
-];
+};
 
 const progress = [
   'audio_restored',
-  'locked_file_accessed',
-  'wires_done',
-  'script_opened',
-  'number_entered',
-  'secret_activated',
+  'binary_solved',
   'cryptex_start'
 ];
 
 let lastIndex = 0;
 const advanceTo = stage => {
   const i = progress.indexOf(stage);
-  if (index < lastStage) return;
+  if (index <= lastStage) return;
   playSounds(stages[stage]);
   lastStage = index;
 };
-*/
 
 class App extends React.Component {
   constructor () {
@@ -87,7 +72,6 @@ class App extends React.Component {
     this.state = {
       cryptexSolved: false,
       binarySolved: false,
-      wiringSolved: false,
       menuOpen: false,
       screen: 'welcome',
       fileIndex: null,
@@ -96,24 +80,9 @@ class App extends React.Component {
 
     this.reset = () => this.setState({ screen: null });
 
-    /*
-    ipcRenderer.on('sd', (event, connected) => {
-      const { sd } = this.state;
-
-      if (!connected) this.setState({ sd: null });
-      else if (!sd) this.setState({ sd: 'connected' });
-    });
-    */
-
-    ipcRenderer.on('nano2', (event, { leds, wires, sd }) => {
-      let nextSd = undefined;
-      if (!sd) nextSd = null;
-      else if (!this.state.sd) nextSd = 'connected';
-
+    ipcRenderer.on('nano2', (event, { leds }) => {
       this.setState({
-        wiringSolved: wires,
         binarySolved: leds === '01001101',
-//        sd: nextSd,
       })
     });
   }
@@ -122,7 +91,8 @@ class App extends React.Component {
     window.app = this;
   }
 
-  componentWillUpdate(props, { cryptexSolved }) {
+  componentDidUpdate(props, { binarySolved }) {
+    if (binarySolved) advanceTo('binarySolved');
   }
 
   getContent() {
@@ -130,7 +100,6 @@ class App extends React.Component {
       sd,
       screen,
       fileIndex,
-      wiringSolved,
       binarySolved,
       menuOpen,
     } = this.state;
@@ -142,7 +111,10 @@ class App extends React.Component {
         <Login
           key="login"
           secret="run"
-          onDone={() => this.setState({ sd: 'confirmed' })}
+          onDone={() => {
+            blip();
+            this.setState({ sd: 'confirmed' });
+          }}
         />
       );
     }
@@ -152,7 +124,10 @@ class App extends React.Component {
         <Preview
           {...folders[screen][fileIndex]}
           folder={screen}
-          onReturn={() => this.setState({ fileIndex: null })}
+          onReturn={() => {
+            this.setState({ fileIndex: null });
+            blip();
+          }}
         />
       );
 
@@ -163,7 +138,8 @@ class App extends React.Component {
             key="welcome"
             onDone={() => {
               this.setState({ screen: null })
-              // @TODO: audio?
+              blip();
+              advanceTo('audio_restored');
             }}
           />
         );
@@ -175,7 +151,10 @@ class App extends React.Component {
           title={screen}
           files={folders[screen]}
           onSelect={fileIndex => this.setState({ fileIndex })}
-          onReturn={() => this.setState({ screen: null })}
+          onReturn={() => {
+            blip();
+            this.setState({ screen: null });
+          }}
         />;
       case 'system':
         return (
@@ -183,7 +162,10 @@ class App extends React.Component {
             key="system"
             secret="KATHERYN"
             onDone={() => this.setState({ screen: 'video' })}
-            onReturn={() => this.setState({ screen: null })}
+            onReturn={() => {
+              this.setState({ screen: null });
+              blip();
+            }}
           />
         );
       case 'video':
@@ -211,14 +193,21 @@ class App extends React.Component {
             title="iynx"
             style={{ left: 56, top: 319, opacity: menuOpen && 0.7 }}
             disabled={menuOpen}
-            onClick={() => this.setState({ menuOpen: !this.state.menuOpen })}
+            onClick={() => {
+              blip();
+              this.setState({ menuOpen: !this.state.menuOpen });
+            }}
           />
           {menuOpen && [
             (<MenuButton
               key="system"
               title="system"
               style={{ left: 134, top: 274 }}
-              onClick={() => this.setState({ screen: 'system' })}
+              onClick={() => {
+                advanceTo('cryptex_start');
+                blip();
+                this.setState({ screen: 'system' });
+              }}
               disabled={!binarySolved}
             />),
             (<MenuButton
@@ -229,7 +218,11 @@ class App extends React.Component {
                 top: 229,
                 transitionDelay: '200ms',
               }}
-              onClick={() => this.setState({ screen: 'gallery' })}
+              onClick={() => {
+                blip();
+                this.setState({ screen: 'gallery' });
+              }}
+              disabled
             />),
             (<MenuButton
               key="personal"
@@ -239,7 +232,10 @@ class App extends React.Component {
                 top: 184,
                 transitionDelay: '400ms',
               }}
-              onClick={() => this.setState({ screen: 'personal' })}
+              onClick={() => {
+                blip();
+                this.setState({ screen: 'personal' })
+              }}
             />),
             (<MenuButton
               key="work"
@@ -249,8 +245,10 @@ class App extends React.Component {
                 top: 274,
                 transitionDelay: '600ms',
               }}
-              onClick={() => this.setState({ screen: 'work' })}
-              disabled={false && !wiringSolved}
+              onClick={() => {
+                blip();
+                this.setState({ screen: 'work' });
+              }}
             />),
           ]}
         </ReactCSSTransitionGroup>

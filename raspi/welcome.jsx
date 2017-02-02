@@ -14,7 +14,8 @@ class Welcome extends React.Component {
       sliders: [ '', '', '', '', '', '', '', '' ],
     };
 
-    ipcRenderer.once('calibration', ()=> {
+    ipcRenderer.once('calibration', () => {
+      new Audio(`sounds/${name}.wav`).play();
       ipcRenderer.on('nano2', (event, { sliders }) => {
         const nextSliders = sliders.map((val, index) => {
           let old = this.state.sliders[index];
@@ -26,7 +27,7 @@ class Welcome extends React.Component {
         });
         ipcRenderer.send('debug', nextSliders.join(',') !== this.state.sliders.join(','));
         if (nextSliders.join(',') !== this.state.sliders.join(','))
-	  this.setState({ sliders: newSliders });
+        this.setState({ sliders: newSliders });
       });
     });
   }
@@ -65,12 +66,12 @@ class Welcome extends React.Component {
           It seems like my systems have been tampered with since you were away on a beautiful holiday.
         </p>
       </Typist>
-      <Typist startDelay={30000} cursor={none}>
+      <Typist startDelay={15000} cursor={none}>
         <p>
           My speech capabilities seem to be malfunctioning.
         </p>
       </Typist>
-      <Typist startDelay={60000} cursor={none}>
+      <Typist startDelay={35000} cursor={none}>
         <p>
           It seems like you must utilize the slider controls on the other panel to repair my speech. Didn’t you know that?
         </p>
